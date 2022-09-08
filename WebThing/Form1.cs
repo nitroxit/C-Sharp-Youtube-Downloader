@@ -69,7 +69,7 @@ namespace WebThing
 
         private void button4_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.MessageBox.Show("Download - Downloads the video + Sounds\n\n Download Audio Only - Should be self explanatory\n\n The Check mark grabs the video Metadata and displays it for you\n\nALL VIDEOS ARE SAVED TO THE DIRECTORY THAT THIS APP IS IN");
+            System.Windows.Forms.MessageBox.Show("Download - Downloads the video with sound into an MP4\n\n Audio Only - Downloads just the audio in the format you choose.\n\n The Check mark grabs the video Metadata and displays it for you\n\nALL VIDEOS ARE SAVED TO THE DIRECTORY THAT THIS APP IS IN\n\nMake sure you have selected a file type when downloading audio only.");
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -79,24 +79,31 @@ namespace WebThing
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            var youtube = new YoutubeClient();
+            try
+            {
+                var youtube = new YoutubeClient();
 
-            // You can specify both video ID or URL "https://www.youtube.com/watch?v=UmioPP3WD0w"
-            var video = await youtube.Videos.GetAsync(textBox1.Text);
+                // You can specify both video ID or URL "https://www.youtube.com/watch?v=UmioPP3WD0w"
+                var video = await youtube.Videos.GetAsync(textBox1.Text);
 
-            var title = video.Title;
-            var author = video.Author.ChannelTitle;
-            var duration = video.Duration;
-            label4.Text = (title).ToString();
-            label5.Text = (author).ToString();
-            label6.Text = (duration).ToString();
-            var streamManifest = await youtube.Videos.Streams.GetManifestAsync(textBox1.Text);
-            var streamInfo = streamManifest.GetMuxedStreams().GetWithHighestVideoQuality();
-            var stream = await youtube.Videos.Streams.GetAsync(streamInfo);
-            await youtube.Videos.DownloadAsync(textBox1.Text, "video." + comboBox1.Text, o => o
-            .SetContainer(comboBox1.Text) // override format
-            .SetPreset(ConversionPreset.UltraFast) // change preset
-            .SetFFmpegPath(@"C:\ffmpeg\bin\ffmpeg.exe")); // custom FFmpeg location
+                var title = video.Title;
+                var author = video.Author.ChannelTitle;
+                var duration = video.Duration;
+                label4.Text = (title).ToString();
+                label5.Text = (author).ToString();
+                label6.Text = (duration).ToString();
+                var streamManifest = await youtube.Videos.Streams.GetManifestAsync(textBox1.Text);
+                var streamInfo = streamManifest.GetMuxedStreams().GetWithHighestVideoQuality();
+                var stream = await youtube.Videos.Streams.GetAsync(streamInfo);
+                await youtube.Videos.DownloadAsync(textBox1.Text, "video." + comboBox1.Text, o => o
+                .SetContainer(comboBox1.Text) // override format
+                .SetPreset(ConversionPreset.UltraFast) // change preset
+                .SetFFmpegPath(@"C:\ffmpeg\bin\ffmpeg.exe")); // custom FFmpeg location
+            }
+            catch
+            {
+                System.Windows.Forms.MessageBox.Show("Invalid Link/ID. Click Help for more info.");
+            }
         }
     }
 }
