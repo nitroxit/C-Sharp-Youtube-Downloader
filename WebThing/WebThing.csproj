@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.45" />
+    <PackageReference Include="ffmpeg.nuget" Version="1.0.0" />
     <PackageReference Include="YoutubeExplode" Version="6.2.1" />
     <PackageReference Include="YoutubeExplode.Converter" Version="6.2.1" />
   </ItemGroup>
