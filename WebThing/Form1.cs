@@ -32,7 +32,7 @@ namespace WebThing
                 var streamManifest = await youtube.Videos.Streams.GetManifestAsync(textBox1.Text);
                 var streamInfo = streamManifest.GetMuxedStreams().GetWithHighestVideoQuality();
                 var stream = await youtube.Videos.Streams.GetAsync(streamInfo);
-                await youtube.Videos.DownloadAsync(textBox1.Text, "video.mp4", o => o
+                await youtube.Videos.DownloadAsync(textBox1.Text, textBox2.Text + ".mp4", o => o
                 .SetContainer("mp4") // override format
                 .SetPreset(ConversionPreset.UltraFast) // change preset
                 .SetFFmpegPath(@"C:\ffmpeg\bin\ffmpeg.exe")); // custom FFmpeg location
@@ -95,7 +95,7 @@ namespace WebThing
                 var streamManifest = await youtube.Videos.Streams.GetManifestAsync(textBox1.Text);
                 var streamInfo = streamManifest.GetMuxedStreams().GetWithHighestVideoQuality();
                 var stream = await youtube.Videos.Streams.GetAsync(streamInfo);
-                await youtube.Videos.DownloadAsync(textBox1.Text, "video." + comboBox1.Text, o => o
+                await youtube.Videos.DownloadAsync(textBox1.Text, textBox2.Text + "." + comboBox1.Text, o => o
                 .SetContainer(comboBox1.Text) // override format
                 .SetPreset(ConversionPreset.UltraFast) // change preset
                 .SetFFmpegPath(@"C:\ffmpeg\bin\ffmpeg.exe")); // custom FFmpeg location
@@ -104,6 +104,29 @@ namespace WebThing
             {
                 System.Windows.Forms.MessageBox.Show("Invalid Link/ID. Click Help for more info.");
             }
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+            ColorDialog MyDialog = new ColorDialog();
+            MyDialog.ShowDialog();
+            this.BackColor = MyDialog.Color;
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            System.Windows.Forms.MessageBox.Show("This tool was made by Nitroxit @Github\n\nDiscord: Fatphrog#0001");
         }
     }
 }
